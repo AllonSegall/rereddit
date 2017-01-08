@@ -14,7 +14,7 @@ router.get("/", function(req, res, next){
   res.send("this is from /!");
 });
 
-router.get("/posts", function(res, res, next){
+router.get("/posts", function(req, res, next){
   Post.find(function(err, posts){
     if (err) { return next(err); }
 
@@ -22,6 +22,13 @@ router.get("/posts", function(res, res, next){
   });
 });
 
+router.get("/posts/:post", function(req, res, next){
+  req.post.populate("comments", function(err, post){
+    if (err) { return next(err); }
+
+    res.json(post);
+  })
+})
 
 ////////////////////////////////   ROUTER POST   //////////////////////////////////
 
